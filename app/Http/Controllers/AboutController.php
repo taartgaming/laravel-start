@@ -6,7 +6,10 @@ class AboutController
 {
     public function index()
     {
-        return view('about-us');
+        $company = 'Hogeschool Rotterdam';
+        return view('about-us', [
+            'company' => $company
+        ]);
     }
 
 }
