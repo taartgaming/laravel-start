@@ -16,7 +16,6 @@ return new class extends Migration {
             $table->smallInteger('num_moves');
             $table->string('description');
             $table->text('algorithm');
-            $table->string('image');
             $table->timestamps();
         });
     }
