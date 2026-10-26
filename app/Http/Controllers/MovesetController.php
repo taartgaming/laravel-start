@@ -19,7 +19,6 @@ class MovesetController
         $moveset->num_moves = 13;
         $moveset->description = 'PLL algorithm that swaps two adjacent corners and two adjacent edges.';
         $moveset->algorithm = "R U R' F' R U R' U' R' F R2 U' R'";
-        $moveset->image = 4;
         $moveset->user_id = auth()->id();
         return view('movesets.index', compact('moveset', 'movesets', 'firstMoveset'));
     }
@@ -39,17 +38,14 @@ class MovesetController
             'description' => 'required|string',
             'num_moves' => 'required|numeric',
             'algorithm' => 'required|string',
-            'image' => 'required|image|mimes:jpeg,png,webp|max:2048'
         ]);
 
-        $cubeState_image = $request->file('image')->storePublicly('state-image', 'public');
 
         $moveset = new Moveset();
         $moveset->name = $request->input('name');
         $moveset->description = $request->input('description');
         $moveset->num_moves = $request->input('num_moves');
         $moveset->algorithm = $request->input('algorithm');
-        $moveset->image = $cubeState_image;
         $moveset->save();
 
 
@@ -62,7 +58,7 @@ class MovesetController
      */
     public function show(Moveset $moveset)
     {
-        //
+        return view('movesets.show', compact('moveset'));
     }
 
     /**

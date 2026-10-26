@@ -1,5 +1,5 @@
 <x-layout title="create">
-    <form method="post" action="{{route('moveset.store')}} " enctype="multipart/form-data">
+    <form method="post" action="{{route('moveset.store')}} " enctype="multipart/form-data" id="moveset-form">
         <div>
             <label for="name">Name</label>
             <input type="text" name="name" id="name" value="{{old('name')}}">
@@ -25,13 +25,6 @@
             <label for="description">description</label>
             <input type="text" name="description" id="description" value="{{old('description')}}">
             @error('description')
-            <span> {{$message}}</span>
-            @enderror
-        </div>
-        <div>
-            <label for="image">Image</label>
-            <input type="file" name="image" id="image">
-            @error('image')
             <span> {{$message}}</span>
             @enderror
         </div>

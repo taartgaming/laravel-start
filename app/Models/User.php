@@ -29,4 +29,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+        public function canCreateMovesets(): bool
+    {
+        return $this->role === 'admin' || $this->role === 'creator';
+    }
 }

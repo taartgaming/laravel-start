@@ -13,4 +13,6 @@ class Moveset extends Model
     {
         return $this->hasMany(Method::class);
     }
+
+
 }
