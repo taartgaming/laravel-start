@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Method;
 use App\Models\Moveset;
 use Illuminate\Http\Request;
 use function Laravel\Prompts\title;
@@ -11,16 +12,10 @@ class MovesetController
 {
     public function index()
     {
-        $firstMoveset = Moveset::first();
         $movesets = Moveset::all();
+        $methods = Method::all(); // Fetch all methods for the filter buttons
 
-        $moveset = new Moveset();
-        $moveset->name = 'Jb Perm';
-        $moveset->num_moves = 13;
-        $moveset->description = 'PLL algorithm that swaps two adjacent corners and two adjacent edges.';
-        $moveset->algorithm = "R U R' F' R U R' U' R' F R2 U' R'";
-        $moveset->user_id = auth()->id();
-        return view('movesets.index', compact('moveset', 'movesets', 'firstMoveset'));
+        return view('movesets.index', compact('methods', 'movesets'));
     }
 
     public function create()

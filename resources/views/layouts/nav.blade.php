@@ -24,14 +24,11 @@
                 <x-link href="{{ route('login')}}">login</x-link>
             </div>
 
-            @auth
-                @if(!auth()->user())
-                    <div
-                        class="bg-[#B71234] border-2 border-[#1C1C1C] rounded px-6 py-2 text-white hover:bg-[#FFD500] hover:text-[#1C1C1C] font-bold transition-colors shadow-[4px_4px_0px_#1C1C1C]">
-                        <x-link href="{{ route('register')}}">register</x-link>
-                    </div>
-                @endif
-            @endauth
+
+            <div
+                class="bg-[#B71234] border-2 border-[#1C1C1C] rounded px-6 py-2 text-white hover:bg-[#FFD500] hover:text-[#1C1C1C] font-bold transition-colors shadow-[4px_4px_0px_#1C1C1C]">
+                <x-link href="{{ route('register')}}">register</x-link>
+            </div>
 
 
         </div>
