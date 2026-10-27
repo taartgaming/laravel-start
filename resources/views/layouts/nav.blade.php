@@ -1,18 +1,21 @@
 <nav class="text-xl p-6 bg-white border-b-4 border-[#1C1C1C] sticky top-0">
     <div class="flex flex-row gap-10 justify-between items-center">
-
-
-        <div class="flex gap-6 text-[#0045AD] font-bold">
-            <x-link class="hover:text-[#FFD500] transition-colors" href="{{ route('contact')}}"
+        <div class="flex gap-6 text-[#1C1C1C] font-bold">
+            <x-link class="hover:text-[#1C1C1C] transition-colors" href="{{ route('home') }}"
+                    :active="request()->routeIs('home')">
+                <img
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0oqda_O2TzcKlOR1Nit_c5bJAN8W4DglMmz_EsLSjIA&s=10"
+                    class="h-10 w-auto object-contain"
+                    alt="Home Logo">
+            </x-link>
+            <x-link class="hover:text-[#1C1C1C] transition-colors" href="{{ route('contact')}}"
                     :active="request()->routeIs('contact')">contact
             </x-link>
-            <x-link class="hover:text-[#FFD500] transition-colors" href="{{ route('about') }}"
+            <x-link class="hover:text-[#1C1C1C] transition-colors" href="{{ route('about') }}"
                     :active="request()->routeIs('about')">about us
             </x-link>
-            <x-link class="hover:text-[#FFD500] transition-colors" href="{{ route('home') }}"
-                    :active="request()->routeIs('home')">Home
-            </x-link>
-            <x-link class="hover:text-[#FFD500] transition-colors" href="{{ route('moveset.index') }}"
+
+            <x-link class="hover:text-[#1C1C1C] transition-colors" href="{{ route('moveset.index') }}"
                     :active="request()->routeIs('moveset.index', 'moveset.show')">
                 moveset
             </x-link>

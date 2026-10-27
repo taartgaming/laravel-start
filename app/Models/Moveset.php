@@ -3,15 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Moveset extends Model
 {
-    protected $fillable = ['num_moves', 'description', 'algorithm', 'image'];
+    protected $fillable = ['num_moves', 'description', 'algorithm',];
 
-    public function methods(): HasMany
+    public function method(): BelongsTo
     {
-        return $this->hasMany(Method::class);
+        return $this->belongsTo(Method::class);
     }
 
 

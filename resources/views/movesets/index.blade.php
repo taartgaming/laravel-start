@@ -1,21 +1,47 @@
 <x-layout title="moveset">
 
-    <div class="flex flex-wrap gap-4 mb-8" id="filter-container">
-        <button
-            class="filter-btn px-6 py-2 bg-[#0045AD] text-white border-2 border-[#1C1C1C] rounded font-bold shadow-[4px_4px_0px_#1C1C1C] hover:bg-[#FFD500] hover:text-[#1C1C1C] transition-colors"
-            data-filter="all">
-            All Steps
-        </button>
-
-        {{-- Dynamic Method Buttons --}}
-        @foreach($methods as $method)
-            <button
-                class="filter-btn px-6 py-2 bg-white text-[#1C1C1C] border-2 border-[#1C1C1C] rounded font-bold shadow-[4px_4px_0px_#1C1C1C] hover:bg-[#FFD500] transition-colors"
-                data-filter="{{ $method->id }}">
-                {{ $method->description }}
+    <form method="GET" action="{{ route('moveset.index') }}" class=" mb-6 space-y-4">
+        <div class="flex gap-2">
+            <input
+                type="text"
+                name="search"
+                value="{{ request('search') }}"
+                placeholder="Search movesets..."
+                class="flex-1 border-2 border-[#1C1C1C] rounded px-4 py-2 shadow-[4px_4px_0px_#1C1C1C]"
+            >
+            <button type="submit"
+                    class="bg-[#B71234] border-2 border-[#1C1C1C] rounded px-6 py-2 text-white font-bold hover:bg-[#FFD500] hover:text-[#1C1C1C] transition-colors shadow-[4px_4px_0px_#1C1C1C]">
+                Search
             </button>
-        @endforeach
-    </div>
+        </div>
+
+        <div class="flex flex-wrap gap-2 ">
+
+            <a href="{{ route('moveset.index', request()->except('method')) }}"
+               class="px-4 py-1 rounded-full border-2 border-[#1C1C1C] font-bold transition-colors
+                  {{ request('method') ? 'bg-white text-[#1C1C1C] hover:bg-[#FFD500]' : 'bg-[#1C1C1C] text-white' }}">
+                All
+            </a>
+
+            @foreach($methods as $method)
+                <label class="cursor-pointer">
+                    <input
+                        type="checkbox"
+                        name="methods[]"
+                        value="{{ $method->id }}"
+                        class="peer sr-only"
+                        onchange="this.form.submit()"
+                        @checked(in_array($method->id, (array) request('methods', [])))
+                    >
+                    <span class="block px-4 py-1 rounded-full border-2 border-[#1C1C1C] font-bold bg-white text-[#1C1C1C] transition-colors
+                             hover:bg-[#FFD500]
+                             peer-checked:bg-[#1C1C1C] peer-checked:text-white">
+                    {{ $method->description }}
+                </span>
+                </label>
+            @endforeach
+        </div>
+    </form>
     @auth
         @if(auth()->user()->canCreateMovesets())
             <div
@@ -45,7 +71,7 @@
 
                     </twisty-player>
                     @foreach($moveset->toArray() as $column => $value)
-                        @if(!in_array($column, ['id', 'name', 'image', 'algorithm']))
+                        @if(!in_array($column, ['id', 'name', 'algorithm', 'user_id','method', 'method_id', 'created_at', 'updated_at']))
                             <p class="grid grid-cols-2 gap-2 mb-2 text-shadow-black">
                                 <strong>{{ ucfirst(str_replace('_', ' ', $column)) }}:</strong>
                                 <span>{{ $value }}</span>

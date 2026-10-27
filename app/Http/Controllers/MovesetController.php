@@ -10,12 +10,27 @@ use function Laravel\Prompts\title;
 
 class MovesetController
 {
-    public function index()
+    public function index(Request $request)
     {
-        $movesets = Moveset::all();
-        $methods = Method::all(); // Fetch all methods for the filter buttons
+        $movesets = Moveset::query()
+            ->with('method')
+            ->when($request->filled('search'), function ($query) use ($request) {
+                $search = $request->string('search');
 
-        return view('movesets.index', compact('methods', 'movesets'));
+                $query->where(function ($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%")
+                        ->orWhere('algorithm', 'like', "%{$search}%");
+                });
+            })
+            ->when($request->filled('methods'), function ($query) use ($request) {
+                $query->whereIn('method_id', $request->input('methods'));
+            })
+            ->latest()
+            ->paginate(12);
+
+        $methods = Method::orderBy('name')->get();
+
+        return view('movesets.index', compact('movesets', 'methods'));
     }
 
     public function create()
