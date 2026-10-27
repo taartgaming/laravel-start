@@ -19,6 +19,10 @@
                     :active="request()->routeIs('moveset.index', 'moveset.show')">
                 moveset
             </x-link>
+            <x-link class="hover:text-[#1C1C1C] transition-colors" href="{{ route('timer') }}"
+                    :active="request()->routeIs('timer')">
+                Timed run
+            </x-link>
         </div>
         <div class="flex gap-6">
 
