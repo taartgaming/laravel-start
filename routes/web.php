@@ -26,6 +26,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/timer', [SolveController::class, 'index'])->name('timer');
     Route::post('/solves', [SolveController::class, 'store'])->name('solves.store');
+
 });
 Route::view('/login', 'auth.login')->name('login');
 

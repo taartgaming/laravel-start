@@ -26,7 +26,7 @@ class MovesetController
                 $query->whereIn('method_id', $request->input('methods'));
             })
             ->latest()
-            ->paginate(12);
+            ->get();
 
         $methods = Method::orderBy('name')->get();
 

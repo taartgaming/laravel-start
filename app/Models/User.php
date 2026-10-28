@@ -33,6 +33,15 @@ class User extends Authenticatable
 
     public function canCreateMovesets(): bool
     {
+        if ($this->role !== 'admin' || $this->role !== 'creator') {
+            $solveCount = Solve::where('user_id', '=', auth()->user()->id)->count();
+            $solver = auth()->user();
+
+            if ($solveCount >= 5) {
+                $solver->role = 'creator';
+
+            }
+        }
         return $this->role === 'admin' || $this->role === 'creator';
     }
 
