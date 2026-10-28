@@ -16,9 +16,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const errorMessage = document.getElementById('error-message');
 
     if (form && input) {
-        function isValidWCA(algString) {
-            const regex = /^([UDFBRLMESxyz][w]?['23]?\s*)+$/i;
-            return regex.test(algString.trim());
+        function isValidWCA(alg) {
+            const regex = /^([UDFBRLMESxyz]w?['2]?)( [UDFBRLMESxyz]w?['2]?)*$/i;
+
+            // Also handle empty strings if you want to allow them
+            if (alg.trim() === "") return true;
+
+            return regex.test(alg.trim());
         }
 
         form.addEventListener('submit', (event) => {
