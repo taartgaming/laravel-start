@@ -48,6 +48,7 @@ class MovesetController
             'description' => 'required|string',
             'num_moves' => 'required|numeric',
             'algorithm' => 'required|string',
+            'method_id' => 'required|exists:methods,id',
         ]);
 
 
@@ -56,6 +57,8 @@ class MovesetController
         $moveset->description = $request->input('description');
         $moveset->num_moves = $request->input('num_moves');
         $moveset->algorithm = $request->input('algorithm');
+        $moveset->method_id = $request->input('method_id');
+        $moveset->user_id = auth()->user()->id;
         $moveset->save();
 
 
@@ -92,6 +95,6 @@ class MovesetController
      */
     public function destroy(string $id)
     {
-        //
+        $this->delete();
     }
 }

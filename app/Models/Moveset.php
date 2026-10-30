@@ -15,5 +15,10 @@ class Moveset extends Model
         return $this->belongsTo(Method::class);
     }
 
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
 
 }
