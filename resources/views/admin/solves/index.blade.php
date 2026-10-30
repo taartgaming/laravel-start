@@ -1,6 +1,6 @@
 <x-layout title="admin-solves">
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="font-semibold text-xl leading-tight text-[#F5F6F2]">
             {{ __('Manage Solves') }}
         </h2>
     </x-slot>
@@ -10,16 +10,16 @@
 
             <!-- Success Message Alert -->
             @if (session('status'))
-                <div class="mb-4 p-4 text-green-700 bg-green-100 rounded-lg dark:bg-green-900 dark:text-green-100">
+                <div class="mb-4 rounded-lg border border-[#2874D0] bg-[#2874D0]/15 p-4 text-[#F5F6F2]">
                     {{ session('status') }}
                 </div>
             @endif
 
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100 overflow-x-auto">
+            <div class="overflow-hidden rounded-lg border border-[#3A424C] bg-[#181C21] shadow-[5px_5px_0_rgba(40,116,208,0.35)]">
+                <div class="overflow-x-auto p-6 text-[#F5F6F2]">
 
                     <table class="min-w-full text-left text-sm">
-                        <thead class="border-b dark:border-gray-700 bg-gray-50 dark:bg-gray-700/50">
+                        <thead class="border-b border-[#3A424C] bg-[#20262D]">
                         <tr>
                             <th class="px-4 py-3 font-semibold">User</th>
                             <th class="px-4 py-3 font-semibold">Scramble</th>
@@ -28,15 +28,15 @@
                             <th class="px-4 py-3 font-semibold text-right">Actions</th>
                         </tr>
                         </thead>
-                        <tbody class="divide-y dark:divide-gray-700">
+                        <tbody class="divide-y divide-[#3A424C]">
                         @foreach ($solves as $solve)
-                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
+                            <tr class="transition-colors hover:bg-[#20262D]"
                                 x-data="{ editMode: false }">
                                 <td class="px-4 py-3">{{ $solve->user->name ?? 'Unknown' }}</td>
 
                                 <td class="px-4 py-3" x-show="!editMode">
                                     <span
-                                        class="font-mono text-xs text-gray-500 dark:text-gray-400">{{ $solve->scramble }}</span>
+                                        class="font-mono text-xs text-[#AEB6C1]">{{ $solve->scramble }}</span>
                                 </td>
 
                                 <td class="px-4 py-3 font-bold" x-show="!editMode">
@@ -46,10 +46,10 @@
                                 <td class="px-4 py-3" x-show="!editMode">
                                     @if ($solve->accepted)
                                         <span
-                                            class="px-2 py-1 text-xs font-semibold text-green-700 bg-green-100 rounded-full dark:bg-green-900 dark:text-green-200">Accepted</span>
+                                            class="rounded-full bg-[#2874D0] px-2 py-1 text-xs font-semibold text-[#F5F6F2]">Accepted</span>
                                     @else
                                         <span
-                                            class="px-2 py-1 text-xs font-semibold text-yellow-700 bg-yellow-100 rounded-full dark:bg-yellow-900 dark:text-yellow-200">Pending</span>
+                                            class="rounded-full bg-[#F4C430] px-2 py-1 text-xs font-semibold text-[#101214]">Pending</span>
                                     @endif
                                 </td>
 
@@ -60,11 +60,11 @@
                                         @csrf
                                         @method('PUT')
                                         <input type="text" name="scramble" value="{{ $solve->scramble }}"
-                                               class="w-full text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-md shadow-sm">
+                                               class="w-full rounded-md border border-[#3A424C] bg-[#20262D] text-sm text-[#F5F6F2] shadow-sm focus:border-[#2874D0] focus:ring-[#2874D0]">
                                         <div class="flex items-center gap-1">
                                             <input type="number" name="time_ms" value="{{ $solve->time_ms }}"
-                                                   class="w-24 text-sm border-gray-300 dark:border-gray-600 dark:bg-gray-700 rounded-md shadow-sm">
-                                            <span class="text-xs text-gray-500">ms</span>
+                                                  class="w-24 rounded-md border border-[#3A424C] bg-[#20262D] text-sm text-[#F5F6F2] shadow-sm focus:border-[#2874D0] focus:ring-[#2874D0]">
+                                              <span class="text-xs text-[#AEB6C1]">ms</span>
                                         </div>
                                     </form>
                                 </td>
@@ -77,14 +77,14 @@
                                                 @csrf
                                                 @method('PATCH')
                                                 <button type="submit"
-                                                        class="text-green-600 hover:text-green-800 dark:text-green-400 dark:hover:text-green-300 font-medium">
+                                                        class="font-medium text-[#2874D0] hover:text-[#F4C430]">
                                                     Accept
                                                 </button>
                                             </form>
                                         @endif
 
                                         <button @click="editMode = true" type="button"
-                                                class="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 font-medium">
+                                                class="font-medium text-[#2874D0] hover:text-[#F4C430]">
                                             Edit
                                         </button>
 
@@ -93,7 +93,7 @@
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit"
-                                                    class="text-red-600 hover:text-red-800 dark:text-red-400 dark:hover:text-red-300 font-medium">
+                                                    class="font-medium text-[#D62839] hover:text-[#EF8B2C]">
                                                 Remove
                                             </button>
                                         </form>
@@ -101,10 +101,10 @@
 
                                     <div x-show="editMode" x-cloak class="flex justify-end gap-2">
                                         <button type="submit" form="edit-form-{{ $solve->id }}"
-                                                class="text-green-600 hover:text-green-800 font-medium">Save
+                                                class="font-medium text-[#2874D0] hover:text-[#F4C430]">Save
                                         </button>
                                         <button @click="editMode = false" type="button"
-                                                class="text-gray-500 hover:text-gray-700 font-medium">Cancel
+                                                class="font-medium text-[#AEB6C1] hover:text-[#F5F6F2]">Cancel
                                         </button>
                                     </div>
 
@@ -115,7 +115,7 @@
                     </table>
 
                     @if($solves->isEmpty())
-                        <div class="py-6 text-center text-gray-500">
+                        <div class="py-6 text-center text-[#AEB6C1]">
                             No solves found in the database.
                         </div>
                     @endif

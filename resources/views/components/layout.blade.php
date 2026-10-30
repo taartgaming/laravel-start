@@ -9,7 +9,7 @@
     <title>{{$title}}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="text-white bg-gray-900">
+<body class="text-white bg-[#101214]">
 @include('layouts.nav')
 <main>
     {{$slot}}

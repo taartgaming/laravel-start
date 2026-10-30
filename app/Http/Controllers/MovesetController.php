@@ -5,15 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Method;
 use App\Models\Moveset;
 use Illuminate\Http\Request;
-use function Laravel\Prompts\title;
-
-
 class MovesetController
 {
     public function index(Request $request)
     {
         $movesets = Moveset::query()
             ->with('method')
+            ->where('is_active', true)
             ->when($request->filled('search'), function ($query) use ($request) {
                 $search = $request->string('search');
 
@@ -26,7 +24,8 @@ class MovesetController
                 $query->whereIn('method_id', $request->input('methods'));
             })
             ->latest()
-            ->get();
+            ->paginate(12)
+            ->withQueryString();
 
         $methods = Method::orderBy('name')->get();
 
@@ -35,7 +34,8 @@ class MovesetController
 
     public function create()
     {
-        return view('movesets.create');
+        $methods = Method::orderBy('name')->get();
+        return view('movesets.create', compact('methods'));
     }
 
     /**
@@ -95,6 +95,6 @@ class MovesetController
      */
     public function destroy(string $id)
     {
-        $this->delete();
+
     }
 }

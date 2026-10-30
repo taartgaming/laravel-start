@@ -1,16 +1,17 @@
 <x-layout title="moveset">
 
-    <form method="GET" action="{{ route('moveset.index') }}" class=" mb-6 space-y-4">
+    <div class="mx-auto max-w-[2200px] px-4 py-8 sm:px-6 lg:px-8">
+    <form method="GET" action="{{ route('moveset.index') }}" class="mb-8 space-y-4">
         <div class="flex gap-2">
             <input
                 type="text"
                 name="search"
                 value="{{ request('search') }}"
                 placeholder="Search movesets..."
-                class="flex-1 border-2 border-[#1C1C1C] rounded px-4 py-2 shadow-[4px_4px_0px_#1C1C1C]"
+                class="min-w-0 flex-1 rounded border border-[#3A424C] bg-[#181C21] px-4 py-3 text-[#F5F6F2] outline-none focus:border-[#2874D0] focus:ring-2 focus:ring-[#2874D0]"
             >
             <button type="submit"
-                    class="bg-[#B71234] border-2 border-[#1C1C1C] rounded px-6 py-2 text-white font-bold hover:bg-[#FFD500] hover:text-[#1C1C1C] transition-colors shadow-[4px_4px_0px_#1C1C1C]">
+                    class="rounded border-2 border-[#F5F6F2] bg-[#D62839] px-6 py-3 font-bold text-[#F5F6F2] shadow-[3px_3px_0_#2874D0] transition-colors hover:bg-[#F4C430] hover:text-[#101214]">
                 Search
             </button>
         </div>
@@ -19,8 +20,8 @@
 
             <a href="{{ route('moveset.index', request()->except('method')) }}"
                draggable="false"
-               class="px-4 py-1 rounded-full border-2 border-[#1C1C1C] font-bold transition-colors
-                  {{ request('method') ? 'bg-white text-[#1C1C1C] hover:bg-[#FFD500]' : 'bg-[#1C1C1C] text-white' }}">
+                    class="rounded-full border border-[#3A424C] bg-[#181C21] px-4 py-2 font-bold text-[#F5F6F2] transition-colors
+                        {{ request('method') ? 'hover:border-[#F4C430]' : 'border-[#F4C430] text-[#F4C430]' }}">
                 All
             </a>
 
@@ -34,9 +35,8 @@
                         onchange="this.form.submit()"
                         @checked(in_array($method->id, (array) request('methods', [])))
                     >
-                    <span class="block px-4 py-1 rounded-full border-2 border-[#1C1C1C] font-bold bg-white text-[#1C1C1C] transition-colors
-                             hover:bg-[#FFD500]
-                             peer-checked:bg-[#1C1C1C] peer-checked:text-white">
+                    <span class="block rounded-full border border-[#3A424C] bg-[#181C21] px-4 py-2 font-bold text-[#F5F6F2] transition-colors
+                             hover:border-[#F4C430] peer-checked:border-[#2874D0] peer-checked:bg-[#2874D0]">
                     {{ $method->description }}
                 </span>
                 </label>
@@ -46,22 +46,22 @@
     @auth
         @if(auth()->user()->canCreateMovesets())
             <div
-                class="bg-[#B71234] border-2 border-[#1C1C1C] rounded px-6 py-2 text-center text-white hover:bg-[#FFD500] hover:text-[#1C1C1C] font-bold transition-colors shadow-[4px_4px_0px_#1C1C1C] text-shadow-black">
+                class="mb-8 rounded border-2 border-[#F5F6F2] bg-[#D62839] px-6 py-3 text-center font-bold text-[#F5F6F2] shadow-[3px_3px_0_#2874D0] transition-colors hover:bg-[#F4C430] hover:text-[#101214]">
                 <x-link href="{{ route('moveset.create')}}">create moveset</x-link>
             </div>
         @endif
     @endauth
 
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
 
         @foreach($movesets as $moveset)
-            @if($moveset->is_active)
-                <x-link href="{{ route('moveset.show', $moveset) }}">
-                    <div class="bg-[#B71234] rounded-xl p-6 shadow-bg-[#B71234]/50 hover:bg-[#FFD500]">
-                        <h2 class="text-xl font-bold mb-4 ">{{$moveset->name}}</h2>
+                <x-link href="{{ route('moveset.show', $moveset) }}" draggable="true">
+                    <div class="rounded-lg border border-[#3A424C] bg-[#181C21] p-6 shadow-[5px_5px_0_rgba(40,116,208,0.35)] transition-colors hover:border-[#F4C430] hover:shadow-[5px_5px_0_#EF8B2C]">
+                        <h2 class="mb-4 text-xl font-bold text-[#F5F6F2]">{{$moveset->name}}</h2>
 
                         <twisty-player
+                            class = "select-none"
                             puzzle="3x3x3"
                             experimental-setup-anchor="end"
                             alg="{{$moveset->algorithm}}"
@@ -77,7 +77,7 @@
 
                         @foreach($moveset->toArray() as $column => $value)
                             @if(!in_array($column, ['id', 'name', 'algorithm', 'user_id','method', 'method_id', 'created_at', 'updated_at']))
-                                <p class="grid grid-cols-2 gap-2 mb-2 text-shadow-black">
+                                <p class="grid grid-cols-2 gap-2 mb-2 text-[#AEB6C1]">
                                     <strong>{{ ucfirst(str_replace('_', ' ', $column)) }}:</strong>
                                     <span>{{ $value }}</span>
                                 </p>
@@ -85,15 +85,21 @@
 
                         @endforeach
                         <p class="grid grid-cols-2 gap-2 mb-2 text-shadow-black">
-                            <strong class="text-xl">Made By:</strong>
+                            <strong class="text-xl text-[#F5F6F2]">Made By:</strong>
                             <span>{{ $moveset->user->name ?? 'System' }}</span>
                         </p>
                     </div>
                 </x-link>
-            @endif
 
         @endforeach
 
+    </div>
+
+    @if($movesets->hasPages())
+        <nav class="mt-10 flex justify-center" aria-label="Moveset pagination">
+            {{ $movesets->links() }}
+        </nav>
+    @endif
     </div>
 
 

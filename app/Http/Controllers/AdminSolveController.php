@@ -15,7 +15,9 @@ class AdminSolveController extends Controller
 
     public function accept(Solve $solve)
     {
-        $solve->update(['accepted' => true]);
+
+        $solve->accepted = true;
+        $solve->save();
         return back()->with('status', 'Solve accepted successfully.');
     }
 
