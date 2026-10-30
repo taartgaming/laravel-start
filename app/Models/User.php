@@ -45,6 +45,7 @@ class User extends Authenticatable
         return $this->role === 'admin' || $this->role === 'creator';
     }
 
+
     public function solves(): HasMany
     {
         return $this->hasMany(Solve::class);

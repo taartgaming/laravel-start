@@ -18,6 +18,7 @@
         <div class="flex flex-wrap gap-2 ">
 
             <a href="{{ route('moveset.index', request()->except('method')) }}"
+               draggable="false"
                class="px-4 py-1 rounded-full border-2 border-[#1C1C1C] font-bold transition-colors
                   {{ request('method') ? 'bg-white text-[#1C1C1C] hover:bg-[#FFD500]' : 'bg-[#1C1C1C] text-white' }}">
                 All
@@ -55,31 +56,42 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
         @foreach($movesets as $moveset)
-            <x-link href="{{ route('moveset.show', $moveset) }}">
-                <div class="bg-[#B71234] rounded-xl p-6 shadow-bg-[#B71234]/50 hover:bg-[#FFD500]">
-                    <h2 class="text-xl font-bold mb-4 ">{{$moveset->name}}</h2>
+            @if($moveset->is_active)
+                <x-link href="{{ route('moveset.show', $moveset) }}">
+                    <div class="bg-[#B71234] rounded-xl p-6 shadow-bg-[#B71234]/50 hover:bg-[#FFD500]">
+                        <h2 class="text-xl font-bold mb-4 ">{{$moveset->name}}</h2>
 
-                    <twisty-player
-                        puzzle="3x3x3"
-                        experimental-setup-anchor="end"
-                        alg="{{$moveset->algorithm}}"
-                        hint-facelets="none"
-                        background="none"
-                        control-panel="none"
-                    >
+                        <twisty-player
+                            puzzle="3x3x3"
+                            experimental-setup-anchor="end"
+                            alg="{{$moveset->algorithm}}"
+                            hint-facelets="none"
+                            background="none"
+                            control-panel="none"
+                            tempo-scale="2"
+                            id="player"
+                        >
 
 
-                    </twisty-player>
-                    @foreach($moveset->toArray() as $column => $value)
-                        @if(!in_array($column, ['id', 'name', 'algorithm', 'user_id','method', 'method_id', 'created_at', 'updated_at']))
-                            <p class="grid grid-cols-2 gap-2 mb-2 text-shadow-black">
-                                <strong>{{ ucfirst(str_replace('_', ' ', $column)) }}:</strong>
-                                <span>{{ $value }}</span>
-                            </p>
-                        @endif
-                    @endforeach
-                </div>
-            </x-link>
+                        </twisty-player>
+
+                        @foreach($moveset->toArray() as $column => $value)
+                            @if(!in_array($column, ['id', 'name', 'algorithm', 'user_id','method', 'method_id', 'created_at', 'updated_at']))
+                                <p class="grid grid-cols-2 gap-2 mb-2 text-shadow-black">
+                                    <strong>{{ ucfirst(str_replace('_', ' ', $column)) }}:</strong>
+                                    <span>{{ $value }}</span>
+                                </p>
+                            @endif
+
+                        @endforeach
+                        <p class="grid grid-cols-2 gap-2 mb-2 text-shadow-black">
+                            <strong class="text-xl">Made By:</strong>
+                            <span>{{ $moveset->user->name ?? 'System' }}</span>
+                        </p>
+                    </div>
+                </x-link>
+            @endif
+
         @endforeach
 
     </div>

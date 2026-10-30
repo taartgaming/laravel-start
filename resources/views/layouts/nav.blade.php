@@ -23,6 +23,13 @@
                     :active="request()->routeIs('timer')">
                 Timed run
             </x-link>
+            @can('access-admin')
+                <x-link class="hover:text-[#1C1C1C] transition-colors" href="{{ route('admin.dashboard') }}"
+                        :active="request()->routeIs('admin.dashboard', 'admin.movesets.index','admin.solves.index'  )">
+                    Admin
+                </x-link>
+            @endcan
+
         </div>
         <div class="flex gap-6">
 
@@ -31,15 +38,11 @@
                 <x-link href="{{ route('login')}}">login</x-link>
             </div>
 
-
             <div
                 class="bg-[#B71234] border-2 border-[#1C1C1C] rounded px-6 py-2 text-white hover:bg-[#FFD500] hover:text-[#1C1C1C] font-bold transition-colors shadow-[4px_4px_0px_#1C1C1C]">
                 <x-link href="{{ route('register')}}">register</x-link>
             </div>
 
-
         </div>
-
-
     </div>
 </nav>
