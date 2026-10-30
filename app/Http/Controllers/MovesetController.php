@@ -10,7 +10,7 @@ class MovesetController
     public function index(Request $request)
     {
         $movesets = Moveset::query()
-            ->with('method')
+            ->with(['method', 'user'])
             ->where('is_active', true)
             ->when($request->filled('search'), function ($query) use ($request) {
                 $search = $request->string('search');
@@ -79,22 +79,51 @@ class MovesetController
      */
     public function edit(string $id)
     {
-        //
+        $moveset = Moveset::findOrFail($id);
+        $this->authorizeManage($moveset);
+
+        $methods = Method::orderBy('name')->get();
+
+        return view('movesets.edit', compact('moveset', 'methods'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Moveset $moveset)
     {
-        //
+        $this->authorizeManage($moveset);
+
+        $validated = $request->validate([
+            'name' => 'required|string',
+            'description' => 'required|string',
+            'num_moves' => 'required|numeric',
+            'algorithm' => 'required|string',
+            'method_id' => 'required|exists:methods,id',
+        ]);
+
+        $moveset->update($validated);
+
+        return redirect()->route('moveset.index')->with('status', 'Moveset updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Moveset $moveset)
     {
+        $this->authorizeManage($moveset);
+        $moveset->delete();
 
+        return redirect()->route('moveset.index')->with('status', 'Moveset deleted successfully.');
+    }
+
+    private function authorizeManage(Moveset $moveset): void
+    {
+        abort_unless(
+            auth()->user()->role === 'admin'
+                || (auth()->user()->role === 'creator' && auth()->id() === $moveset->user_id),
+            403
+        );
     }
 }

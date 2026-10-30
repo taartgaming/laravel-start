@@ -29,6 +29,14 @@
                     Admin
                 </x-link>
             @endcan
+            @can('access-admin-or-creator')
+                @cannot('access-admin')
+                    <x-link class="transition-colors" href="{{ route('admin.movesets.index') }}"
+                            :active="request()->routeIs('admin.movesets.index')">
+                        Manage movesets
+                    </x-link>
+                @endcannot
+            @endcan
 
         </div>
         <div class="flex gap-6">

@@ -43,6 +43,13 @@
             @endforeach
         </div>
     </form>
+
+    @if(session('status'))
+        <div class="mb-8 rounded-lg border border-[#2874D0] bg-[#2874D0]/15 p-4 text-[#F5F6F2]">
+            {{ session('status') }}
+        </div>
+    @endif
+
     @auth
         @if(auth()->user()->canCreateMovesets())
             <div
@@ -56,8 +63,8 @@
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
 
         @foreach($movesets as $moveset)
-                <x-link href="{{ route('moveset.show', $moveset) }}" draggable="true">
                     <div class="rounded-lg border border-[#3A424C] bg-[#181C21] p-6 shadow-[5px_5px_0_rgba(40,116,208,0.35)] transition-colors hover:border-[#F4C430] hover:shadow-[5px_5px_0_#EF8B2C]">
+                        <x-link href="{{ route('moveset.show', $moveset) }}" draggable="false" class="block">
                         <h2 class="mb-4 text-xl font-bold text-[#F5F6F2]">{{$moveset->name}}</h2>
 
                         <twisty-player
@@ -74,22 +81,25 @@
 
 
                         </twisty-player>
+                        
 
                         @foreach($moveset->toArray() as $column => $value)
-                            @if(!in_array($column, ['id', 'name', 'algorithm', 'user_id','method', 'method_id', 'created_at', 'updated_at']))
+                            @if(!in_array($column, ['id', 'name', 'algorithm', 'user_id', 'user', 'method', 'method_id', 'created_at', 'updated_at', 'is_active']))
                                 <p class="grid grid-cols-2 gap-2 mb-2 text-[#AEB6C1]">
                                     <strong>{{ ucfirst(str_replace('_', ' ', $column)) }}:</strong>
-                                    <span>{{ $value }}</span>
+                                    <span>{{ is_array($value) ? json_encode($value) : $value }}</span>
                                 </p>
                             @endif
 
                         @endforeach
+    
                         <p class="grid grid-cols-2 gap-2 mb-2 text-shadow-black">
                             <strong class="text-xl text-[#F5F6F2]">Made By:</strong>
                             <span>{{ $moveset->user->name ?? 'System' }}</span>
                         </p>
+                        </x-link>
+
                     </div>
-                </x-link>
 
         @endforeach
 

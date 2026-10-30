@@ -8,7 +8,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Moveset extends Model
 {
-    protected $fillable = ['num_moves', 'description', 'algorithm',];
+    protected $fillable = [
+        'name',
+        'num_moves',
+        'description',
+        'algorithm',
+        'method_id',
+    ];
 
     public function method(): BelongsTo
     {

@@ -26,6 +26,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/timer', [SolveController::class, 'index'])->name('timer');
     Route::post('/solves', [SolveController::class, 'store'])->name('solves.store');
+
+    Route::resource('/moveset', MovesetController::class)->only([
+        'create', 'store', 'edit', 'update', 'destroy',
+    ]);
 });
 
 
@@ -39,15 +43,17 @@ Route::middleware(['auth', 'can:access-admin'])->prefix('admin')->name('admin.')
     Route::get('/solves/{solve}/edit', [AdminSolveController::class, 'edit'])->name('solves.edit'); // Nieuw
     Route::put('/solves/{solve}', [AdminSolveController::class, 'update'])->name('solves.update');
     Route::delete('/solves/{solve}', [AdminSolveController::class, 'destroy'])->name('solves.destroy');
+});
+
+Route::middleware(['auth', 'can:access-admin-or-creator'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/movesets', [AdminMovesetController::class, 'index'])->name('movesets.index');
     Route::post('/movesets/{moveset}/toggle', [AdminMovesetController::class, 'toggleStatus'])->name('movesets.toggle');
-
 });
 Route::view('/login', 'auth.login')->name('login');
 
 
 Route::get('/about', [AboutController::class, 'index'])->name('about');
-Route::resource('/moveset', MovesetController::class);
+Route::resource('/moveset', MovesetController::class)->only(['index', 'show']);
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 
