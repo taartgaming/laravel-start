@@ -9,7 +9,15 @@ class SolveController extends Controller
 {
     public function index()
     {
-        return view('solves.timer');
+        $leaderboard = Solve::query()
+            ->with('user:id,name')
+            ->where('accepted', true)
+            ->orderBy('time_ms')
+            ->latest('created_at')
+            ->limit(10)
+            ->get();
+
+        return view('solves.timer', compact('leaderboard'));
     }
 
     public function store(Request $request)
