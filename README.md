@@ -1,58 +1,20 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Rubik's Cube Speedtimer & Moveset Database
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Een overzichtelijke webapplicatie speciaal gemaakt voor speedcubers. In deze app kun je jouw tijden bijhouden, jezelf vergelijken met anderen en nieuwe algoritmes leren.
 
-## About Laravel
+## Belangrijkste Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Speedcube Timer
+De core van de applicatie is de ingebouwde timer. 
+* **Echte scrambles:** Voordat je begint, genereert de app een willekeurige, wiskundig kloppende WCA-scramble zodat de kubus altijd correct door elkaar zit.
+* **Makkelijk in gebruik:** Houd de spatiebalk ingedrukt om te wachten en laat los om de timer te starten. Druk op een willekeurige toets om hem weer te stoppen.
+* **Snel opslaan:** Zodra je klaar bent, kun je je tijd opslaan. je kuntdirect door met je volgende solve!
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Leaderboard
+Op het leaderboard kun je zien wie de snelste tijden heeft neergezet. Alleen tijden die eerlijk zijn behaald en (door de beheerder) zijn geaccepteerd, verschijnen in deze leaderboard. 
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
-
-```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
-```
-
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Movesets (Algoritme Database)
+Naast het timen kun je in de app een uitgebreide lijst met algoritmes ("movesets") vinden om de Rubik's kubus sneller op te lossen.
+* **Gesorteerd op methode:** Alle algoritmes zijn netjes gecategoriseerd, bijvoorbeeld op bekende methodes zoals CFOP of beginnersmethodes.
+* **Zelf toevoegen:** Gebruikers kunnen hun eigen favoriete algoritmes toevoegen wanneer ze zijn geaccepteerd als creator. De app controleert hierbij direct of je de officiële letters en tekens (WCA notatie) gebruikt, zodat er geen foute algoritmes in de lijst komen te staan.
+```eof
