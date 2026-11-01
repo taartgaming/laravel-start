@@ -31,6 +31,9 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('access-creator', function (User $user) {
             return $user->role === 'creator';
         });
+        Gate::define('create-moveset', function (User $user) {
+            return $user->canCreateMovesets();
+        });
         Gate::define('active', function (moveset $moveset) {
             return $moveset->is_active;
         });
