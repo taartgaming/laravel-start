@@ -51,12 +51,12 @@
     @endif
 
     @auth
-        @if(auth()->user()->canCreateMovesets())
+        @can('create-moveset')
             <div
                 class="mb-8 rounded border-2 border-[#F5F6F2] bg-[#D62839] px-6 py-3 text-center font-bold text-[#F5F6F2] shadow-[3px_3px_0_#2874D0] transition-colors hover:bg-[#F4C430] hover:text-[#101214]">
                 <x-link href="{{ route('moveset.create')}}">create moveset</x-link>
             </div>
-        @endif
+        @endcan
     @endauth
 
 

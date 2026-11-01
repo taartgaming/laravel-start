@@ -40,7 +40,7 @@
                                     class="rounded border-2 border-[#F5F6F2] bg-[#D62839] px-4 py-2 font-bold text-[#F5F6F2] shadow-[3px_3px_0_#2874D0] hover:bg-[#F4C430] hover:text-[#101214]">
                                 Save Changes
                             </button>
-                            <a href="{{ route('admin.solves') }}"
+                            <a href="{{ route('admin.solves.index') }}"
                                class="inline-flex items-center text-[#AEB6C1] hover:text-[#F5F6F2]">
                                 Cancel
                             </a>

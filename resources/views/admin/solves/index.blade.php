@@ -81,6 +81,15 @@
                                                     Accept
                                                 </button>
                                             </form>
+                                        @else
+                                            <form action="{{ route('admin.solves.reject', $solve) }}" method="POST">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button type="submit"
+                                                        class="font-medium text-[#F4C430] hover:text-[#EF8B2C]">
+                                                    Reject
+                                                </button>
+                                            </form>
                                         @endif
 
                                         <button @click="editMode = true" type="button"

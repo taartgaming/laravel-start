@@ -18,7 +18,17 @@ class AdminSolveController extends Controller
 
         $solve->accepted = true;
         $solve->save();
+        $solve->user->tryCreator();
         return back()->with('status', 'Solve accepted successfully.');
+    }
+
+    public function reject(Solve $solve)
+    {
+        $solve->accepted = false;
+        $solve->save();
+        $solve->user->tryCreator();
+
+        return back()->with('status', 'Solve rejected successfully.');
     }
 
     public function update(Request $request, Solve $solve)
@@ -43,7 +53,9 @@ class AdminSolveController extends Controller
 
     public function destroy(Solve $solve)
     {
+        $user = $solve->user;
         $solve->delete();
+        $user->tryCreator();
         return back()->with('status', 'Solve removed.');
     }
 }

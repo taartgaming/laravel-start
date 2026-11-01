@@ -23,34 +23,30 @@
                     :active="request()->routeIs('timer')">
                 Timed run
             </x-link>
-            @can('access-admin')
-                <x-link class="transition-colors" href="{{ route('admin.dashboard') }}"
-                        :active="request()->routeIs('admin.dashboard', 'admin.movesets.index','admin.solves.index'  )">
-                    Admin
-                </x-link>
-            @endcan
-            @can('access-admin-or-creator')
-                @cannot('access-admin')
-                    <x-link class="transition-colors" href="{{ route('admin.movesets.index') }}"
-                            :active="request()->routeIs('admin.movesets.index')">
-                        Manage movesets
-                    </x-link>
-                @endcannot
-            @endcan
-
         </div>
         <div class="flex gap-6">
+            @guest
+                <div class="rounded border-2 border-[#F5F6F2] bg-[#D62839] px-4 py-2 font-bold text-[#F5F6F2] shadow-[3px_3px_0_#2874D0] transition-colors hover:bg-[#F4C430] hover:text-[#101214]"><x-link href="{{ route('login') }}">login</x-link></div>
+                <div class="rounded border-2 border-[#F5F6F2] bg-[#D62839] px-4 py-2 font-bold text-[#F5F6F2] shadow-[3px_3px_0_#2874D0] transition-colors hover:bg-[#F4C430] hover:text-[#101214]"><x-link href="{{ route('register') }}">register</x-link></div>
+            @else
+                <x-link
+                    href="{{ route('dashboard') }}"
+                    :active="request()->routeIs('dashboard', 'profile.edit')"
+                    class="rounded border-2 border-[#F5F6F2] bg-[#2874D0] px-4 py-2 font-bold text-[#F5F6F2] shadow-[3px_3px_0_#D62839] transition-colors hover:bg-[#F4C430] hover:text-[#101214]"
+                >
+                    {{ auth()->user()->name }}
+                </x-link>
 
-            <div
-                class="bg-[#D62839] border-2 border-[#F5F6F2] rounded px-4 py-2 text-[#F5F6F2] shadow-[3px_3px_0_#2874D0] font-bold transition-colors hover:bg-[#F4C430] hover:text-[#101214]">
-                <x-link href="{{ route('login')}}">login</x-link>
-            </div>
-
-            <div
-                class="bg-[#D62839] border-2 border-[#F5F6F2] rounded px-4 py-2 text-[#F5F6F2] shadow-[3px_3px_0_#2874D0] font-bold transition-colors hover:bg-[#F4C430] hover:text-[#101214]">
-                <x-link href="{{ route('register')}}">register</x-link>
-            </div>
-
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button
+                        type="submit"
+                        class="rounded border-2 border-[#F5F6F2] bg-[#D62839] px-4 py-2 font-bold text-[#F5F6F2] shadow-[3px_3px_0_#2874D0] transition-colors hover:bg-[#F4C430] hover:text-[#101214]"
+                    >
+                        logout
+                    </button>
+                </form>
+            @endguest
         </div>
     </div>
 </nav>

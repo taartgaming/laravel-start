@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminMovesetController;
 use App\Http\Controllers\AdminSolveController;
+use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SolveController;
 use App\Http\Controllers\AboutController;
@@ -15,8 +16,11 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+    return view('dashboard', [
+        'user' => request()->user(),
+        'tab' => request()->string('tab', 'overview')->toString(),
+    ]);
+})->middleware('auth')->name('dashboard');
 
 Route::middleware('auth')->group(function () {
 
@@ -28,8 +32,14 @@ Route::middleware('auth')->group(function () {
     Route::post('/solves', [SolveController::class, 'store'])->name('solves.store');
 
     Route::resource('/moveset', MovesetController::class)->only([
-        'create', 'store', 'edit', 'update', 'destroy',
-    ]);
+        'create', 'store', 'update', 'destroy',
+    ])->middlewareFor(['create', 'store'], 'can:create-moveset');
+
+    Route::get('/dashboard/solves/{solve}/edit', [AdminSolveController::class, 'edit'])
+        ->middleware('can:access-admin')
+        ->name('dashboard.solves.edit');
+    Route::get('/dashboard/movesets/{moveset}/edit', [MovesetController::class, 'edit'])
+        ->name('dashboard.movesets.edit');
 });
 
 
@@ -40,9 +50,13 @@ Route::middleware(['auth', 'can:access-admin'])->prefix('admin')->name('admin.')
 
     Route::get('/solves', [AdminSolveController::class, 'index'])->name('solves.index');
     Route::patch('/solves/{solve}/accept', [AdminSolveController::class, 'accept'])->name('solves.accept');
-    Route::get('/solves/{solve}/edit', [AdminSolveController::class, 'edit'])->name('solves.edit'); // Nieuw
     Route::put('/solves/{solve}', [AdminSolveController::class, 'update'])->name('solves.update');
     Route::delete('/solves/{solve}', [AdminSolveController::class, 'destroy'])->name('solves.destroy');
+    Route::patch('/solves/{solve}/reject', [AdminSolveController::class, 'reject'])->name('solves.reject');
+    Route::get('/users', [AdminUserController::class, 'index'])->name('users.index');
+    Route::patch('/users/{user}/demote', [AdminUserController::class, 'demote'])->name('users.demote');
+    Route::patch('/users/{user}/unaccept-runs', [AdminUserController::class, 'unacceptRuns'])->name('users.unaccept-runs');
+    Route::delete('/users/{user}', [AdminUserController::class, 'destroy'])->name('users.destroy');
 });
 
 Route::middleware(['auth', 'can:access-admin-or-creator'])->prefix('admin')->name('admin.')->group(function () {

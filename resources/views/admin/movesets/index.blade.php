@@ -1,6 +1,28 @@
-<x-layout title="admin-moveset">
+<x-layout title="Manage Movesets">
     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-        <h2 class="mb-4 text-2xl font-bold text-[#F5F6F2]">Admin: Manage Movesets</h2>
+
+        <div class="mb-6 flex items-end justify-between gap-4">
+            <div>
+                @can('access-admin')
+                    <h2 class="text-2xl font-bold text-[#F5F6F2]">Admin: Manage Movesets</h2>
+                @endcan
+
+                @can('access-creator')
+                    <h2 class="text-2xl font-bold text-[#F5F6F2]">Creator: Manage Movesets</h2>
+                @endcan
+            </div>
+            <a href="{{ route('dashboard', ['tab' => 'admin']) }}"
+               class="font-bold text-[#AEB6C1] hover:text-[#F4C430]">Back to dashboard</a>
+        </div>
+
+        @can('access-admin-or-creator')
+            <div class="mb-4">
+                <a href="{{ route('moveset.create') }}"
+                    class="rounded border-2 border-[#F5F6F2] bg-[#D62839] px-6 py-3 font-bold text-[#F5F6F2] shadow-[3px_3px_0_#2874D0] transition-colors hover:bg-[#F4C430] hover:text-[#101214]">
+                    Create New Moveset
+                </a>
+            </div>
+        @endcan
 
         @if (session('status'))
             <div class="mb-4 rounded-lg border border-[#2874D0] bg-[#2874D0]/15 p-4 text-[#F5F6F2]">
@@ -36,7 +58,7 @@
                         </td>
 
                         <td class="flex justify-end gap-2 px-4 py-3">
-                            <a href="{{ route('moveset.edit', $moveset) }}" class="rounded border border-[#2874D0] px-3 py-1 text-xs font-bold text-[#2874D0] transition-colors hover:bg-[#2874D0] hover:text-[#F5F6F2]">Edit</a>
+                            <a href="{{ route('dashboard.movesets.edit', $moveset) }}" class="rounded border border-[#2874D0] px-3 py-1 text-xs font-bold text-[#2874D0] transition-colors hover:bg-[#2874D0] hover:text-[#F5F6F2]">Edit</a>
                             <form action="{{ route('moveset.destroy', $moveset) }}" method="POST" onsubmit="return confirm('Delete this moveset?');">
                                 @csrf
                                 @method('DELETE')
