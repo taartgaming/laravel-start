@@ -8,9 +8,6 @@ Alpine.start();
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // ==========================================
-    // 1. CUBE VALIDATIE LOGICA (Voor je formulier)
-    // ==========================================
     const form = document.getElementById('moveset-form');
     const input = document.getElementById('algorithm');
     const errorMessage = document.getElementById('error-message');
@@ -43,11 +40,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // Alleen uitvoeren als de timer elementen op het scherm staan
-
-// ==========================================
-    // 2. TIMER & SCRAMBLE LOGICA (Voor je timer pagina)
-    // ==========================================
     const scrambleDisplay = document.getElementById("scramble-display");
     const timerDisplay = document.getElementById("timer-display");
     const saveBtn = document.getElementById("save-btn");
@@ -61,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let isSpacebarDown = false;
         let finalTimeMs = 0;
 
-        // Async functie om de scramble te laden
+
         async function loadScramble() {
             try {
                 scrambleDisplay.innerText = "Generating scramble...";
@@ -74,17 +66,17 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Start direct met laden
+
         loadScramble();
 
         function updateDisplay(ms) {
             timerDisplay.innerText = (ms / 1000).toFixed(2);
         }
 
-        // --- Spacebar Timer Events ---
+
         document.addEventListener("keydown", (e) => {
             if (e.code === "Space") {
-                // Voorkom dat de pagina naar beneden scrollt
+
                 e.preventDefault();
 
                 if (isRunning) {
@@ -95,8 +87,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (saveBtn) saveBtn.classList.remove('hidden');
                 } else if (!isSpacebarDown && (!saveBtn || saveBtn.classList.contains('hidden'))) {
                     isSpacebarDown = true;
-                    timerDisplay.classList.add("text-green-500");
-                    timerDisplay.classList.remove("text-[#1c1c1c]-500");
+                    timerDisplay.classList.add("text-[#F4C430]");
+
                     updateDisplay(0);
                 }
             } else if (isRunning) {
@@ -111,8 +103,8 @@ document.addEventListener('DOMContentLoaded', () => {
         document.addEventListener("keyup", (e) => {
             if (e.code === "Space" && isSpacebarDown && !isRunning) {
                 isSpacebarDown = false;
-                timerDisplay.classList.remove("text-green-500");
-                timerDisplay.classList.add("text-[#1c1c1c]-500");
+                timerDisplay.classList.remove("text-[#F4C430]");
+
                 isRunning = true;
                 startTime = Date.now();
 
@@ -123,9 +115,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
 
-        // ==========================================
-        // 3. OPSLAAN LOGICA (Nu BINNEN de scope!)
-        // ==========================================
         const saveStatus = document.getElementById("save-status");
         const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
@@ -155,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 saveStatus.classList.add('hidden');
                             }, 2000);
                         }
-                        loadScramble(); // Dit werkt nu ook perfect!
+                        loadScramble();
                     } else {
                         console.error("Server error", await response.text());
                         alert("Error saving solve. Are you logged in?");
@@ -168,5 +157,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         }
-    } // <-- Einde van de grote if-statement
-}); // <-- Einde DOMContentLoaded
+    }
+    const player = document.getElementById('player');
+    const playButton = document.getElementById('play-btn');
+
+    if (player && playButton) {
+        playButton.addEventListener('click', () => {
+            player.play();
+        });
+    }
+});
+
+
+
+
+
